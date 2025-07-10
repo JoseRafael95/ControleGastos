@@ -2,10 +2,13 @@ package com.jRafael.ControleGastos.Repository;
 
 import com.jRafael.ControleGastos.Entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CategoryRepositry extends JpaRepository<Category, Long> {
 
-    Category findByEmail(String email);
+    Category findByName(String name);
 
-    void deleteByEmail(String email);
+    void deleteByName(String name);
+
 }
