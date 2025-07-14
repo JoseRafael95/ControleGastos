@@ -1,7 +1,8 @@
 package com.jRafael.ControleGastos.Controller;
 
+import com.jRafael.ControleGastos.Dto.CategoryDto;
 import com.jRafael.ControleGastos.Entity.Category;
-import com.jRafael.ControleGastos.Entity.DTO.CategoryDto;
+
 import com.jRafael.ControleGastos.Service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{name}")
-    public ResponseEntity<Category> update(@PathVariable String name, @RequestBody CategoryDto update){
+    public ResponseEntity<Category> update(@PathVariable String name, @RequestBody Category update){
        return ResponseEntity.ok(categoryService.update(name, update));
 
     }

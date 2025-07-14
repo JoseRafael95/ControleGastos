@@ -43,6 +43,8 @@ public class Transaction {
         this.category = category;
     }
 
+
+
     public long getId() {
         return id;
     }

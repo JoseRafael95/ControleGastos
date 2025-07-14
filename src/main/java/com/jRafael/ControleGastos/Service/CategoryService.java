@@ -1,7 +1,6 @@
 package com.jRafael.ControleGastos.Service;
 
 import com.jRafael.ControleGastos.Entity.Category;
-import com.jRafael.ControleGastos.Entity.DTO.CategoryDto;
 import com.jRafael.ControleGastos.Repository.CategoryRepositry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +32,7 @@ public class CategoryService {
         categoryRepositry.deleteByName(name);
     }
 
-    public Category update(String name, CategoryDto newName){
+    public Category update(String name, Category newName){
         Category categoryUpdate = categoryRepositry.findByName(name);
         if(categoryUpdate == null){
             throw new RuntimeException("Categoria não encotrada");
