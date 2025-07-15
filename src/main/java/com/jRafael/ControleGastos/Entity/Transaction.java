@@ -1,5 +1,7 @@
 package com.jRafael.ControleGastos.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -23,10 +25,12 @@ public class Transaction {
     private TransactionType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("users-transaction")
     @JoinColumn(name = "id_user",nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("categories-transaction")
     @JoinColumn(name = "id_category",nullable = false)
     private Category category;
 

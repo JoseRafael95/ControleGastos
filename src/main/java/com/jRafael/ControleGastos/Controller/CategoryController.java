@@ -5,6 +5,8 @@ import com.jRafael.ControleGastos.Entity.Category;
 
 import com.jRafael.ControleGastos.Service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,22 +20,22 @@ public class CategoryController {
 
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAll(){
-        return ResponseEntity.ok(categoryService.findAll());
+    public ResponseEntity<Page<CategoryDto>> findAll(Pageable pageable){
+        return ResponseEntity.ok(categoryService.findAll(pageable));
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Category> findByName(@PathVariable String name){
+    public ResponseEntity<CategoryDto> findByName(@PathVariable String name){
         return ResponseEntity.ok(categoryService.findByName(name));
     }
 
     @PostMapping
-    public ResponseEntity<Category> save(@RequestBody Category category){
+    public ResponseEntity<CategoryDto> save(@RequestBody Category category){
         return  ResponseEntity.ok(categoryService.save(category));
     }
 
     @PutMapping("/{name}")
-    public ResponseEntity<Category> update(@PathVariable String name, @RequestBody Category update){
+    public ResponseEntity<CategoryDto> update(@PathVariable String name, @RequestBody Category update){
        return ResponseEntity.ok(categoryService.update(name, update));
 
     }

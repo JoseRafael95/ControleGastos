@@ -1,5 +1,6 @@
 package com.jRafael.ControleGastos.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class User {
     private String senha;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference("users-transaction")
     private List<Transaction> transactions;
 
     public User() {

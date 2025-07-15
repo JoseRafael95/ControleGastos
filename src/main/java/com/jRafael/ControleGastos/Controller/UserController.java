@@ -1,8 +1,11 @@
 package com.jRafael.ControleGastos.Controller;
 
+import com.jRafael.ControleGastos.Dto.UserDto;
 import com.jRafael.ControleGastos.Entity.User;
 import com.jRafael.ControleGastos.Service.UserService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,18 +22,18 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> findAll(){
-        return ResponseEntity.ok(userService.fidAll());
+    @GetMapping
+    public ResponseEntity<Page<UserDto>> findAll(Pageable pageable){
+        return ResponseEntity.ok(userService.fidAll(pageable));
     }
 
-    @GetMapping
-    public ResponseEntity<User> findByEmail(@RequestParam String email){
+    @GetMapping("/{email}")
+    public ResponseEntity<UserDto> findByEmail(@PathVariable String email){
         return ResponseEntity.ok(userService.findByEmail(email));
     }
 
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody User user){
+    public ResponseEntity<UserDto> save(@RequestBody User user){
         return ResponseEntity.ok(userService.save(user));
     }
 

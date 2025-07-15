@@ -8,6 +8,8 @@ import com.jRafael.ControleGastos.Repository.CategoryRepositry;
 import com.jRafael.ControleGastos.Repository.TransactionRepository;
 import com.jRafael.ControleGastos.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,8 +51,8 @@ public class TransactionService {
         return new TransactionDto(newTransaction);
     }
 
-    public List<Transaction> findAll(){
-        return transactionRepository.findAll();
+    public Page<Transaction> findAll(Pageable pageable){
+        return transactionRepository.findAll(pageable);
     }
 
     public void deleteById(Long id){
