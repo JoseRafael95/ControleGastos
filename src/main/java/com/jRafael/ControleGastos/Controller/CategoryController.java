@@ -4,6 +4,7 @@ import com.jRafael.ControleGastos.Dto.CategoryDto;
 import com.jRafael.ControleGastos.Entity.Category;
 
 import com.jRafael.ControleGastos.Service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,12 +31,12 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDto> save(@RequestBody Category category){
+    public ResponseEntity<CategoryDto> save(@Valid @RequestBody Category category){
         return  ResponseEntity.ok(categoryService.save(category));
     }
 
     @PutMapping("/{name}")
-    public ResponseEntity<CategoryDto> update(@PathVariable String name, @RequestBody Category update){
+    public ResponseEntity<CategoryDto> update(@PathVariable String name, @Valid @RequestBody Category update){
        return ResponseEntity.ok(categoryService.update(name, update));
 
     }

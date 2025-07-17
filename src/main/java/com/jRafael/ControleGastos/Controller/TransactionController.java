@@ -28,4 +28,9 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.save(transaction));
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<TransactionDto> update(@PathVariable Long id,  @RequestBody TransactionDto newTransaction ){
+        return ResponseEntity.ok(transactionService.update(id,newTransaction));
+    }
+
 }

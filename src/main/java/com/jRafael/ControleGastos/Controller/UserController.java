@@ -4,6 +4,7 @@ import com.jRafael.ControleGastos.Dto.UserDto;
 import com.jRafael.ControleGastos.Entity.User;
 import com.jRafael.ControleGastos.Service.UserService;
 
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +34,13 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> save(@RequestBody User user){
-        return ResponseEntity.ok(userService.save(user));
+    public ResponseEntity<UserDto> save(@Valid @RequestBody UserDto userDto){
+        return ResponseEntity.ok(userService.save(userDto));
+    }
+
+    @PutMapping("{user}")
+    public  ResponseEntity<UserDto> update(@PathVariable String user,@Valid @RequestBody UserDto newUser){
+        return ResponseEntity.ok(userService.update(user, newUser));
     }
 
     @DeleteMapping("/{email}")

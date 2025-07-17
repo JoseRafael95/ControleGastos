@@ -2,11 +2,14 @@ package com.jRafael.ControleGastos.Dto;
 
 import com.jRafael.ControleGastos.Entity.User;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
 
 public class UserDto {
 
     private long id;
+    @NotBlank(message = "O nome do usuário não pode ser nulo.")
     private String name;
+    @NotBlank(message = "O nome do usuário não pode ser nulo.")
     private String email;
 
     public UserDto() {

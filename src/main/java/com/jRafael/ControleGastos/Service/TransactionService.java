@@ -7,6 +7,7 @@ import com.jRafael.ControleGastos.Entity.User;
 import com.jRafael.ControleGastos.Repository.CategoryRepositry;
 import com.jRafael.ControleGastos.Repository.TransactionRepository;
 import com.jRafael.ControleGastos.Repository.UserRepository;
+import com.jRafael.ControleGastos.Service.exceptions.TransactionNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,6 +55,17 @@ public class TransactionService {
     public Page<Transaction> findAll(Pageable pageable){
         return transactionRepository.findAll(pageable);
     }
+
+    public TransactionDto update(Long id, TransactionDto newTransactionDto){
+        Transaction transaction = transactionRepository.findById(id)
+                .orElseThrow(() -> new TransactionNotFoundException("Transação não encontrada"));
+
+        transaction.setType(newTransactionDto.getType());
+        transaction.setPrice(newTransactionDto.getPrice());
+        transactionRepository.save(transaction);
+        return new TransactionDto(transaction);
+    }
+
 
     public void deleteById(Long id){
         transactionRepository.deleteById(id);

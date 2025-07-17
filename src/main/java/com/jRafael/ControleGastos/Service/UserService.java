@@ -22,9 +22,12 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserDto save(User user){
-        User saveUser = userRepository.save(user);
-        return new UserDto(saveUser);
+    public UserDto save(UserDto userDto){
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        User savedUser = userRepository.save(user);
+        return new UserDto(savedUser);
     }
 
     public Page<UserDto> fidAll(Pageable pageable){
@@ -39,6 +42,20 @@ public class UserService {
         }
         return new UserDto(user);
     }
+
+    public UserDto update(String user, UserDto newUser){
+       User result = userRepository.findByEmail(user);
+       if(result == null){
+           throw new UserNotFound("Email ou usuário não encotrado");
+       }
+
+
+       result.setName(newUser.getName());
+       result.setEmail(newUser.getEmail());
+       userRepository.save(result);
+       return new UserDto(result);
+    }
+
     @Transactional
     public void delete(String email){
         userRepository.deleteByEmail(email);
