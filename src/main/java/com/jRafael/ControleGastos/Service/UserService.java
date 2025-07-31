@@ -6,6 +6,7 @@ import com.jRafael.ControleGastos.Repository.UserRepository;
 import com.jRafael.ControleGastos.Service.exceptions.UserNotFound;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +17,17 @@ import java.util.Optional;
 
 public class UserService {
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public UserDto save(UserDto userDto){
         User user = new User();
+        user.setSenha(passwordEncoder.encode(userDto.getSenha()));
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         User savedUser = userRepository.save(user);

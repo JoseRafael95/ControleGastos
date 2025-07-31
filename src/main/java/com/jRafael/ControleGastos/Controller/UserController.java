@@ -1,13 +1,18 @@
 package com.jRafael.ControleGastos.Controller;
 
+import com.jRafael.ControleGastos.Dto.LoginDto;
 import com.jRafael.ControleGastos.Dto.UserDto;
 import com.jRafael.ControleGastos.Entity.User;
+import com.jRafael.ControleGastos.Security.JwtUtil;
 import com.jRafael.ControleGastos.Service.UserService;
 
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,10 +22,14 @@ import java.util.List;
 
 public class UserController {
 
-    private  UserService userService;
+    private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         this.userService = userService;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
     }
 
     @GetMapping
@@ -46,6 +55,17 @@ public class UserController {
     @DeleteMapping("/{email}")
     public void delete(@PathVariable String email){
         userService.delete(email);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginDto loginDto){
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginDto.getEmail(), loginDto.getSenha())
+        );
+
+        return jwtUtil.generateToken(authentication.getName());
+
     }
 
 
